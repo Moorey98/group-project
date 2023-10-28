@@ -1,0 +1,199 @@
+{% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Abel&family=DM+Sans:ital,opsz@1,9..40&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="styles.css">
+        <meta charset="UTF-8">
+        <title>Annies Adoption</title>
+
+    </head>
+    <body>
+    <section id="header"> 
+        <img src="{% static 'image/logo.jpg' %}" class="logo">
+
+        <div>
+            <ul id="navbar">
+                <li><a class="active" href="{% url 'parcTest:homepage' %}"> Home </a></li>
+                <li><a href="{% url 'parcTest:listingspage' %}"> View Listings </a></li>
+                <li><a href="{% url 'parcTest:signuppage' %}"> Sign Up </a></li>
+                <li><a href="{% url 'parcTest:loginpage' %}"> Login</a></li>
+                <li><a href="{% url 'admin:index' %}">Go to admin(admin only)</a></li>
+                <li><a href="contact.html"> Contact <i class="fa-solid fa-phone"></i>  </a></li>
+            </ul>
+        </div>
+    </section>
+    <section id="hero">
+        <h2>Welcome to Annies Adoption!</h2>
+        <h2>Click below to view our pets for adoption</h2>
+        <button>Click here</button>
+    </section>
+    <section id="animal1" class="section-p1">
+        <h2>Featured Animals</h2>
+        <p>View our Featured Animals below </p>
+        <div class="pro-container">
+        <div class="pro">
+            <img src="{% static 'image/boxer.png' %}" alt="">
+            <div class="des">
+                <span>Black Lab</span>
+                <h5> Hello, my name is Gus </h5>    
+                <h4> $120 </h4>
+            </div>
+            <div class="fe-button">
+                <button> Adopt now! </button>
+            </div>
+            <a href="#"> <i class=""> </i></a>
+        </div>
+        <div class="pro">
+            <img src="{% static 'images/siberian.png' %}" alt="">
+            <div class="des">
+                <span>Black Lab</span>
+                <h5> Hello, my name is Gus </h5>    
+                <h4> $120 </h4>
+            </div>
+            <div class="fe-button">
+                <button> Adopt now! </button>
+            </div>
+            <a href="#"> <i class=""> </i></a>
+        </div>
+        <div class="pro">
+            <img src="images/boxer.png" alt="">
+            <div class="des">
+                <span>Black Lab</span>
+                <h5> Hello, my name is Gus </h5>    
+                <h4> $120 </h4>
+            </div>
+            <div class="fe-button">
+                <button> Adopt now! </button>
+            </div>
+            <a href="#"> <i class=""> </i></a>
+        </div>
+        <div class="pro">
+            <img src="images/CattleDog.png" alt="">
+
+            <div class="des">
+                <span>Black Lab</span>
+                <h5> Hello, my name is Gus </h5>    
+                <h4> $120 </h4>
+            </div>
+            <div class="fe-button">
+                <button> Adopt now! </button>
+            </div>
+            <a href="#"> <i class=""> </i></a>
+        </div>
+        <div class="pro">
+            <img src="images/cockatiel.png" alt="">
+            <div class="des">
+                <span>Black Lab</span>
+                <h5> Hello, my name is Gus </h5>    
+                <h4> $120 </h4>
+            </div>
+            <div class="fe-button">
+                <button> Adopt now! </button>
+            </div>
+            <a href="#"> <i class=""> </i></a>
+        </div>
+        <div class="pro">
+            <img src="images/dwarfRabbit.png" alt="">
+            <div class="des">
+                <span>Black Lab</span>
+                <h5> Hello, my name is Gus </h5>    
+                <h4> $120 </h4>
+            </div>
+            <div class="fe-button">
+                <button> Adopt now! </button>
+            </div>
+            <a href="#"> <i class=""> </i></a>
+        </div>
+        <div class="pro">
+            <img src="images/gallah.png" alt="">
+            <div class="des">
+                <span>Black Lab</span>
+                <h5> Hello, my name is Gus </h5>    
+                <h4> $120 </h4>
+            </div>
+            <div class="fe-button">
+                <button> Adopt now! </button>
+            </div>
+            <a href="#"> <i class=""> </i></a>
+        </div>
+        <div class="pro">
+            <img src="images/gingerTabby.png" alt="">
+            <div class="des">
+                <span>Black Lab</span>
+                <h5> Hello, my name is Gus </h5>    
+                <h4> $120 </h4>
+            </div>
+            <div class="fe-button">
+                <button> Adopt now! </button>
+            </div>
+            <a href="#"> <i class=""> </i></a>
+        </div>
+        <div class="pro">
+            <img src="{% static 'images/floppyEaredRabbit.png' %}" >
+
+            <div class="des">
+                <span>Black Lab</span>
+                <h5> Hello, my name is Gus </h5>    
+                <h4> $120 </h4>
+            </div>
+            <div class="fe-button">
+                <button> Adopt now! </button>
+            </div>
+            <a href="#"> <i class=""> </i></a>
+        </div>
+        <div class="pro">
+            <img src="{% static 'image/chihuahua.jpg' %}" class="logo">
+            <div class="des">
+                <span>Black Lab</span>
+                <h5> Hello, my name is Gus </h5>    
+                <h4> $120 </h4>
+            </div>
+            <div class="fe-button">
+                <button> Adopt now! </button>
+            </div>
+            <a href="#"> <i class=""> </i></a>
+        </div>
+        </div>
+        
+    </section>
+    <section id="newsletter"class="section-p1">
+        <div class="newstext">
+            <h4> Sign Up For Newsletter</h4>
+            <p>Get E-mail updates about our latest Animals up for Adoption</p>
+        </div>
+            <div class="form">
+                <input type="text" Placeholder="Your email address">
+                <button class="normal"> Sign Up </button>
+            </div>
+    </section>
+        <script src="script.js"> </script>
+    <footer class="section-p1">
+        <div class="col">
+            <img class="logo" src="img/logo.jpg" alt="">
+            <h4>Contact </h4>
+            <p><strong>Address:</strong> 1 George Street, Sydney</p>
+            <p><strong>Phone:</strong> +04 43543543 </p>
+            <p><strong>Hours :</strong> 09:00 - 17:00 Mon - Sat</p>
+            </div>
+            <div class="follow">
+                <h4> Follow us</h4>
+            </div>
+                <div class="col">
+                    <h4>My Account </h4>
+                    <a href="#"> Sign in</a>
+                    <a href="#"> Track my Application </a>
+            </div>
+            <div class="col">
+                <h4>About  </h4>
+                <a href="#"> About us</a>
+                <a href="#"> Terms & Conditions </a>
+                <a href="#"> Contact Us</a>
+                <a href="#"> Help </a>
+        </div>
+        </div>
+    </footer>
+    </body>
+</html>

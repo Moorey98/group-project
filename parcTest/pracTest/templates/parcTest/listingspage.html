@@ -1,0 +1,323 @@
+{% load static %} 
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pet Summary</title>
+  <style>
+    #header{
+    font-family: 'Abel', sans-serif;
+    font-family: 'DM Sans', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 80px;
+    background-color: #CBEBF9;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.06, green, blue, alpha);
+    z-index: 999;
+    position: sticky;
+    top: 0;
+    left: 0;
+}
+#navbar{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+#navbar li {
+    list-style: none;
+    padding: 0 20px;
+    position: relative;
+
+}
+
+#navbar li a{
+    text-decoration: none;
+    font-size:16px;
+    font-weight: 600;
+    color: #1a1a1a;
+    transition: 0.3s ease;
+}
+#navbar li a:hover,
+#navbar li a.active{
+    color: #088178;
+}
+#navbar li a.active::after,
+#navbar li a:hover::after{
+    content: "";
+    width: 30%;
+    height: 2px;
+    background-color: #088178;
+    position: absolute;
+    bottom: -4px;
+    left: 20px;
+
+}
+    .pet-card {
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin: 10px;
+      width: 200px;
+      display: inline-block;
+      text-align: center;
+    }
+    .pet-card img {
+      width: 100%;
+      cursor: pointer;
+    }
+    .pet-card img:hover {
+      opacity: 0.7;
+    }
+    .details-modal {
+      display: none;
+      position: fixed;
+      top: 100px;
+      left: 0px;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: white;
+      padding: 40px;
+      border-radius: 5px;
+      max-width: 400px;
+      text-align: center;
+    }
+    .close-button {
+      float: right;
+      cursor: pointer;
+    }
+    #newsletter {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    background-color: #088178;
+    background-repeat: no-repeat;
+    background-position: 20% 30%;
+    margin: 20px 0;
+}
+#newsletter h4{
+    font: 22px;
+    font-weight: 700;
+    color: white;
+}
+#newsletter p{
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+}
+#newsletter input {
+    height: 3.125rem;
+    padding: 0 1.25em;
+    font-size: 14px;
+    width: 100%;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    outline: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+#newsletter .form{
+    display: flex;
+    width: 40%;
+}
+/*FOOTER SECTION*/
+
+footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+footer .col{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+footer .logo{
+    margin-bottom: 30px;
+}
+footer h4 {
+    font-size: 14px;
+    padding-bottom: 20px;
+}
+footer p {
+    font-size: 13px;
+    padding-bottom: 0 0 8px 0;
+}
+footer a {
+    font-size: 13px;
+    text-decoration: none;
+    color: #222;
+    padding-bottom: 10px;
+}
+  </style>
+</head>
+<body>
+    <section id="header"> 
+    <a href="#"> <img src="img/logo.jpg" class="logo"> </a>
+    <div>
+        <ul id="navbar">
+          <li><a class="active" href="{% url 'parcTest:homepage' %}"> Home </a></li>
+          <li><a href="{% url 'parcTest:listingspage' %}"> View Listings </a></li>
+          <li><a href="{% url 'parcTest:signuppage' %}"> Sign Up </a></li>
+          <li><a href="{% url 'parcTest:loginpage' %}"> Login</a></li>
+          <li><a href="{% url 'admin:index' %}">Go to admin(admin only)</a></li>
+          <li><a href="contact.html"> Contact <i class="fa-solid fa-phone"></i>  </a></li>
+        </ul>
+    </div>
+    </section>
+    <h1>Pet Summary</h1>
+    
+    <div id="petContainer">
+      <!-- Pet cards will be displayed here -->
+    </div>
+    
+    <div id="detailsModal" class="details-modal">
+      <div class="modal-content">
+        <span class="close-button" onclick="hideDetails()">&times;</span>
+        <h2 id="petName"></h2>
+        <p id="petDetails"></p>
+      </div>
+    </div>
+    
+    <script>
+      const petData = `name, species, breed, age, gender, description, image_path, status, suburb, state, fee, date_added
+      'Buddy', 'Dog', 'Golden Retriever', 2, 'Male', 'Friendly and playful.', 'images/goldenRetriever.png', 'Adoption Pending', 'Manly', 'NSW', 1250, '2023-04-27 06:07:10'
+      'Fluffy', 'Cat', 'Siberian', 3, 'Female', 'Gentle and affectionate.', 'images/siberian.png', 'Available', 'Chatswood', 'NSW', 1000, '2023-04-27 06:07:10'
+      'Rio', 'Bird', 'Cockatiel', 5, 'Unknown', 'Loves to talk and sing star wars theme.', 'images/cockatiel.png', 'Available', 'Yagoona', 'NSW', 100, '2023-04-27 06:07:10'
+      'Max', 'Horse', 'Quarter Horse', 9, 'Male', 'A bit flighty around children. Floats well. Suitable for experienced riders only. Good herding horse. Works well with capable herding dogs.', 'images/quarterhorse.png', 'Available', 'Bega', 'NSW', 2300, '2023-04-27 06:07:10'
+      'Thumper', 'Rabbit', 'Floppy Eared Rabbit', 2, 'Unknown', 'Shy but loves to cuddle.', 'images/floppyEaredRabbit.png', 'Available', 'Wollongong', 'NSW', 50, '2023-04-27 06:07:10'
+      'Diesel', 'Dog', 'Labrador', 4, 'Male', 'Diesel is very shy due to his unpleasant past. Diesel needs a family that can spend a lot of time with him to overcome his anxiety. He will need a lot of time to adjust to his new home so he will need someone that is experienced with shy reluctant dogs. Once you win him over he will be a very good companion.', 'images/blacklab.png', 'Available', 'Watsons Bay', 'NSW', 750, '2023-05-07 11:58:10'
+      'Thor', 'Dog', 'Siberian Husky', 1, 'Male', 'Thor is super active and needs a family that will provide plenty of exercise suitable to his breed and age. His new home should have no small kids no other dogs or small animals. But he loves cats. Breed experience is essential.', 'images/husky.png', 'Adoption Pending', 'Penrith', 'NSW', 1000, '2023-05-07 12:02:53'
+      'Boris & Natasha', 'Bird', 'Loverbirds', 3, 'Unknown', 'Boris and Natasha are a bonded pair and are being offered for adoption together. They cannot be separated. Adoption fee is for the pair.', 'images/loveBirds.png', 'Available', 'Southbank', 'VIC', 200, '2023-05-07 12:08:04'
+      'Red', 'Dog', 'Australian Cattle Dog', 7, 'Female', 'Red needs a new home due to no fault of her own. She is very loving towards her chosen family member and will bond with them quickly. Red is a typical cattle dog and will protect her family at all costs. She is best suited to a family with children older than 15 years and she would prefer to be the only dog in the family.', 'images/CattleDog.png', 'Available', 'Ascot', 'QLD', 500, '2023-05-07 12:13:23'
+      'Hope', 'Dog', 'Boxer', 6, 'Female', 'This lovely girls elderly owner needs to go into a retirement home so is reluctantly looking for a caring new home for Hope. Like your typical boxer dog Hope loves cuddles and licks. She does have special needs due to a kidney infection when she was younger. However her condition is managed well with daily medication. Details can be provided upon enquiry.', 'images/boxer.png', 'Available', 'Carlton', 'VIC', 500, '2023-05-07 12:18:44'
+      'Scooter', 'Dog', 'Maltese Terrier', 11, 'Male', 'Scooter wasn't wanted by his previous owners because his coat took too much effort to look after. We found him at a local pound where he had been left for 4 months. Scooter is quite snappy but with some encouragement will hopefully settle down in a better environment.', 'images/maltese.png', 'Available', '', 'VIC', 300, '2023-05-07 12:23:52'
+      'Casper', 'Cat', 'Persian', 3, 'Male', 'Casper is a lovely cat who would benefit from having at least one other cat friend at home.', 'images/no_image_available.png', 'Available', '', 'VIC', 350, '2023-05-07 12:27:10'
+      'Saphire', 'Cat', 'Siamese', 4, 'Female', 'Saphire is a striking Siamese beauty with piercing blue eyes. She comes to us due to the death of her owner. Saphire does not like other cats but will tolerate dogs.', 'images/siamese.png', 'Available', 'Glenfield', 'NSW', 450, '2023-05-07 12:40:35'
+      'Pablo', 'Dog', 'Chihuahua', 8, 'Male', 'Pablo is an interesting little guy. He has one bulging eye and his tongue sticks out the side all of the time. This is due to having very few teeth remaining. Unfortunately he comes from a bad background and has not had the happiest life. Pablo likes other dogs as long as they are smaller than him. Pablo would love to find a new home that will pander to his every wish for warmth good food and love. Will you be Pablo's special home?', 'images/chihuahua.png', 'Available', 'Hamilton', 'QLD', 350, '2023-05-07 12:47:20'
+      'Ginger', 'Cat', 'Tabby', 2, 'Female', 'Ginger is a very affectionate happy girl. She loves hunting birds so would be best suited to being an indoor-only cat (to save our native birds). She is very active and smart.', 'images/gingerTabby.png', 'Available', 'Penrith', 'NSW', 350, '2023-05-07 12:51:14'
+      'Lia', 'Dog', 'Labrador', 2, 'Female', 'Lia is a lovely natured young labrador. Her owners surrendered her when she got too big for them to handle. She hasn't had much training so we feel that was the biggest problem. Since being in our care she has learnt a lot and has gained some valuable social skills and manners. She is still learning to walk properly on lead - but she is trying hard to please. Lia is a very large girl and needs to continue on her diet in her new home to achieve her ideal weight.', 'images/yellowLab.png', 'Available', 'Manly', 'NSW', 600, '2023-05-07 12:59:01'
+      'Trixie', 'Rabbit', 'Dwarf Rabbit', 2, 'Unknown', 'Trixie is a crazy high energy rabbit. Very shy of young children but easy to handle by adults. ', 'images/dwarfRabbit.png', 'Available', '', 'ACT', 50, '2023-05-07 13:07:07'`;
+    
+      // Split the data into an array of lines
+      const petDataArray = petData.split('\n');
+    
+      // Remove the header row
+      petDataArray.shift();
+    
+      const petContainer = document.getElementById('petContainer');
+    
+      petDataArray.forEach(pet => {
+        const [name, species, breed, age, gender, description, image, status, suburb, state, fee, dateAdded] = pet.split(', ');
+    
+        const petCard = document.createElement('div');
+        petCard.classList.add('pet-card');
+    
+        const petImage = document.createElement('img');
+        // Adjust the image path to include the correct location
+        petImage.src = `${image.slice(1, -1)}`;
+        petImage.alt = name;
+        petImage.addEventListener('click', () => showDetails(name, species, breed, age, gender, description, image, status, suburb, state, fee, dateAdded));
+    
+        const petName = document.createElement('div');
+        petName.innerText = `Name: ${name.slice(1, -1)}`;
+    
+        const petSpecies = document.createElement('div');
+        petSpecies.innerText = `Species: ${species}`;
+    
+        const petGender = document.createElement('div');
+        petGender.innerText = `Gender: ${gender}`;
+    
+        const petAge = document.createElement('div');
+        petAge.innerText = `Age: ${age}`;
+    
+        const petStatus = document.createElement('div');
+        petStatus.innerText = `Status: ${status}`;
+    
+        petCard.appendChild(petImage);
+        petCard.appendChild(petName);
+        petCard.appendChild(petSpecies);
+        petCard.appendChild(petGender);
+        petCard.appendChild(petAge);
+        petCard.appendChild(petStatus);
+    
+        petContainer.appendChild(petCard);
+      });
+    
+      function showDetails(name, species, breed, age, gender, description, image, status, suburb, state, fee, dateAdded) {
+        const petNameElement = document.getElementById('petName');
+        const petDetailsElement = document.getElementById('petDetails');
+        
+    
+        petNameElement.innerText = `Name: ${name}`;
+        petDetailsElement.innerHTML = `
+          Species: ${species}<br>
+          Breed: ${breed}<br>
+          Age: ${age}<br>
+          Gender: ${gender}<br>
+          Description: ${description}<br>
+          Status: ${status}<br>
+          Suburb: ${suburb}<br>
+          State: ${state}<br>
+          Fee: $${fee}<br>
+          Date Added: ${dateAdded}
+        `;
+    
+        const modal = document.getElementById('detailsModal');
+        modal.style.display = 'block';
+      }
+    
+      function hideDetails() {
+        const modal = document.getElementById('detailsModal');
+        modal.style.display = 'none';
+      }
+      function applyForAdoption(petName) {
+        alert(`Applying for adoption of: ${petName}`);
+      }
+    </script>
+    <section id="newsletter"class="section-p1">
+      <div class="newstext">
+          <h4> Sign Up For Newsletter</h4>
+          <p>Get E-mail updates about our latest Animals up for Adoption</p>
+      </div>
+          <div class="form">
+              <input type="text" Placeholder="Your email address">
+              <button class="normal"> Sign Up </button>
+          </div>
+  </section>
+      <script src="script.js"> </script>
+  <footer class="section-p1">
+      <div class="col">
+          <img class="logo" src="img/logo.jpg" alt="">
+          <h4>Contact </h4>
+          <p><strong>Address:</strong> 1 George Street, Sydney</p>
+          <p><strong>Phone:</strong> +04 43543543 </p>
+          <p><strong>Hours :</strong> 09:00 - 17:00 Mon - Sat</p>
+          </div>
+          <div class="follow">
+              <h4> Follow us</h4>
+          </div>
+              <div class="col">
+                  <h4>My Account </h4>
+                  <a href="#"> Sign in</a>
+                  <a href="#"> Track my Application </a>
+          </div>
+          <div class="col">
+              <h4>About  </h4>
+              <a href="#"> About us</a>
+              <a href="#"> Terms & Conditions </a>
+              <a href="#"> Contact Us</a>
+              <a href="#"> Help </a>
+      </div>
+      </div>
+  </footer>
+    </body>
+    </html>
+    
