@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/userpage.css' %}">
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Your User Dashboard</h1>
+        
+        <h2>Available Animals</h2>
+        <ul>
+            <li>
+                <img src="{% static 'images/animal1.jpg' %}" alt="Animal 1">
+                <h3>Animal 1</h3>
+                <p>Description of Animal 1</p>
+                <form action="{% url 'parcTest:submit_adoption_request' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="animal_id" value="1">
+                    <button type="submit">Submit Adoption Request</button>
+                </form>
+            </li>
+
+        </ul>
+        
+        <h2>Your Adoption Requests</h2>
+        <ul>
+            <li>
+                <h3>Request for Animal 1</h3>
+                <p>Status: Pending</p>
+            </li>
+
+        </ul>
+    </div>
+</body>
+</html>

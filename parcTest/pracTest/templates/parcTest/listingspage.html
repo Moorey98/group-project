@@ -175,7 +175,6 @@ footer a {
     <h1>Pet Summary</h1>
     
     <div id="petContainer">
-      <!-- Pet cards will be displayed here -->
     </div>
     
     <div id="detailsModal" class="details-modal">
@@ -206,10 +205,8 @@ footer a {
       'Lia', 'Dog', 'Labrador', 2, 'Female', 'Lia is a lovely natured young labrador. Her owners surrendered her when she got too big for them to handle. She hasn't had much training so we feel that was the biggest problem. Since being in our care she has learnt a lot and has gained some valuable social skills and manners. She is still learning to walk properly on lead - but she is trying hard to please. Lia is a very large girl and needs to continue on her diet in her new home to achieve her ideal weight.', 'images/yellowLab.png', 'Available', 'Manly', 'NSW', 600, '2023-05-07 12:59:01'
       'Trixie', 'Rabbit', 'Dwarf Rabbit', 2, 'Unknown', 'Trixie is a crazy high energy rabbit. Very shy of young children but easy to handle by adults. ', 'images/dwarfRabbit.png', 'Available', '', 'ACT', 50, '2023-05-07 13:07:07'`;
     
-      // Split the data into an array of lines
       const petDataArray = petData.split('\n');
     
-      // Remove the header row
       petDataArray.shift();
     
       const petContainer = document.getElementById('petContainer');
