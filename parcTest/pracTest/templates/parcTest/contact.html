@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+    <meta charset="UTF-8">
+    <title>Contact Us!</title>
+</head>
+<body>
+    <form method="post">
+        <label for="email">Please enter Your Email Address</label>
+        <input type="email" id="email" name="email" placeholder="Email" required>
+        <br>
+        <label for="name"> Please enter Your full name</label>
+        <input type="text" id="name" placeholder="Full Name">
+        <br>
+        <label for="ContactMessage"> Ask us your questions below </label>
+        <input type="text" id="message" placeholder="Please type here">
+        <button type="submit" id="contactbtn"> Submit Message</button>
+    </form>
+</body>
+</html>
